@@ -1,0 +1,294 @@
+BEGIN Configuration File: /mnt/f/Multicore/booksim2/runfiles/meshconfig
+// $Id $
+
+// Copyright (c) 2007-2015, Trustees of The Leland Stanford Junior University
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// Redistributions of source code must retain the above copyright notice, this
+// list of conditions and the following disclaimer.
+// Redistributions in binary form must reproduce the above copyright notice,
+// this list of conditions and the following disclaimer in the documentation
+// and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// POSSIBILITY OF SUCH DAMAGE.
+
+
+//
+// Flow control
+//
+
+num_vcs     = 16;
+vc_buf_size = 8;
+
+wait_for_tail_credit = 1;
+
+
+vc_allocator = islip; 
+sw_allocator = islip;
+alloc_iters  = 2;
+
+credit_delay   = 2;
+routing_delay  = 0;
+vc_alloc_delay = 1;
+sw_alloc_delay = 1;
+st_final_delay = 1;
+
+input_speedup     = 1;
+output_speedup    = 1;
+internal_speedup  = 1.0;
+
+//
+// Traffic
+//
+
+sim_type = latency;
+
+warmup_periods = 3;
+
+sample_period  = 1000;  
+
+sim_count          = 1;
+
+
+
+//topoogy
+
+topology = mesh;
+k  = 8;
+n  = 2;
+//
+// Routing
+
+
+routing_function = dor;
+
+packet_size = 1;
+
+use_read_write = 0;
+
+traffic       = uniform;
+
+injection_rate = 0.2;
+
+
+
+
+END Configuration File: /mnt/f/Multicore/booksim2/runfiles/meshconfig
+OVERRIDE Parameter: topology=mesh
+OVERRIDE Parameter: k=8
+OVERRIDE Parameter: n=2
+OVERRIDE Parameter: routing_function=adaptive_xy_yx
+OVERRIDE Parameter: num_vcs=4
+OVERRIDE Parameter: traffic=bitcomp
+OVERRIDE Parameter: injection_rate=0.05
+OVERRIDE Parameter: packet_size=1
+OVERRIDE Parameter: sample_period=200
+OVERRIDE Parameter: warmup_periods=1
+OVERRIDE Parameter: sim_count=1
+Class 0:
+Packet latency average = 38.5431
+	minimum = 14
+	maximum = 70
+Network latency average = 38.5431
+	minimum = 14
+	maximum = 70
+Slowest packet = 248
+Flit latency average = 38.5431
+	minimum = 14
+	maximum = 70
+Slowest flit = 248
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.0485937
+	minimum = 0.02 (at node 29)
+	maximum = 0.08 (at node 45)
+Accepted packet rate average = 0.0389844
+	minimum = 0.02 (at node 0)
+	maximum = 0.07 (at node 18)
+Injected flit rate average = 0.0485937
+	minimum = 0.02 (at node 29)
+	maximum = 0.08 (at node 45)
+Accepted flit rate average= 0.0389844
+	minimum = 0.02 (at node 0)
+	maximum = 0.07 (at node 18)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 123 (0 measured)
+latency change    = 1
+throughput change = 1
+Warmed up ...Time used is 200 cycles
+Class 0:
+Packet latency average = 40.0276
+	minimum = 14
+	maximum = 81
+Network latency average = 40.0276
+	minimum = 14
+	maximum = 81
+Slowest packet = 624
+Flit latency average = 40.7987
+	minimum = 14
+	maximum = 81
+Slowest flit = 624
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.0507812
+	minimum = 0.03 (at node 1)
+	maximum = 0.075 (at node 29)
+Accepted packet rate average = 0.0492969
+	minimum = 0.02 (at node 55)
+	maximum = 0.07 (at node 1)
+Injected flit rate average = 0.0507812
+	minimum = 0.03 (at node 1)
+	maximum = 0.075 (at node 29)
+Accepted flit rate average= 0.0492969
+	minimum = 0.02 (at node 55)
+	maximum = 0.07 (at node 1)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 142 (142 measured)
+latency change    = 0.0370863
+throughput change = 0.209192
+Class 0:
+Packet latency average = 39.7648
+	minimum = 14
+	maximum = 81
+Network latency average = 39.7648
+	minimum = 14
+	maximum = 81
+Slowest packet = 624
+Flit latency average = 40.1786
+	minimum = 14
+	maximum = 81
+Slowest flit = 624
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.0504297
+	minimum = 0.0325 (at node 57)
+	maximum = 0.085 (at node 29)
+Accepted packet rate average = 0.0489844
+	minimum = 0.0325 (at node 23)
+	maximum = 0.075 (at node 34)
+Injected flit rate average = 0.0504297
+	minimum = 0.0325 (at node 57)
+	maximum = 0.085 (at node 29)
+Accepted flit rate average= 0.0489844
+	minimum = 0.0325 (at node 23)
+	maximum = 0.075 (at node 34)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 160 (160 measured)
+latency change    = 0.00660758
+throughput change = 0.00637959
+Class 0:
+Packet latency average = 40.2241
+	minimum = 14
+	maximum = 82
+Network latency average = 40.2241
+	minimum = 14
+	maximum = 82
+Slowest packet = 1861
+Flit latency average = 40.4649
+	minimum = 14
+	maximum = 82
+Slowest flit = 1861
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.0505208
+	minimum = 0.035 (at node 9)
+	maximum = 0.0716667 (at node 29)
+Accepted packet rate average = 0.050026
+	minimum = 0.0333333 (at node 37)
+	maximum = 0.0683333 (at node 34)
+Injected flit rate average = 0.0505208
+	minimum = 0.035 (at node 9)
+	maximum = 0.0716667 (at node 29)
+Accepted flit rate average= 0.050026
+	minimum = 0.0333333 (at node 37)
+	maximum = 0.0683333 (at node 34)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 142 (142 measured)
+latency change    = 0.0114192
+throughput change = 0.0208225
+Class 0:
+Packet latency average = 40.2529
+	minimum = 14
+	maximum = 117
+Network latency average = 40.2529
+	minimum = 14
+	maximum = 117
+Slowest packet = 2333
+Flit latency average = 40.4331
+	minimum = 14
+	maximum = 117
+Slowest flit = 2333
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.0497656
+	minimum = 0.03375 (at node 9)
+	maximum = 0.0675 (at node 41)
+Accepted packet rate average = 0.0497461
+	minimum = 0.03125 (at node 54)
+	maximum = 0.06875 (at node 22)
+Injected flit rate average = 0.0497656
+	minimum = 0.03375 (at node 9)
+	maximum = 0.0675 (at node 41)
+Accepted flit rate average= 0.0497461
+	minimum = 0.03125 (at node 54)
+	maximum = 0.06875 (at node 22)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 124 (124 measured)
+latency change    = 0.000714231
+throughput change = 0.00562754
+Draining all recorded packets ...
+Draining remaining packets ...
+Time taken is 1131 cycles
+====== Overall Traffic Statistics ======
+====== Traffic class 0 ======
+Packet latency average = 40.3858 (1 samples)
+	minimum = 14 (1 samples)
+	maximum = 117 (1 samples)
+Network latency average = 40.3858 (1 samples)
+	minimum = 14 (1 samples)
+	maximum = 117 (1 samples)
+Flit latency average = 40.5343 (1 samples)
+	minimum = 14 (1 samples)
+	maximum = 117 (1 samples)
+Fragmentation average = 0 (1 samples)
+	minimum = 0 (1 samples)
+	maximum = 0 (1 samples)
+Injected packet rate average = 0.0497656 (1 samples)
+	minimum = 0.03375 (1 samples)
+	maximum = 0.0675 (1 samples)
+Accepted packet rate average = 0.0497461 (1 samples)
+	minimum = 0.03125 (1 samples)
+	maximum = 0.06875 (1 samples)
+Injected flit rate average = 0.0497656 (1 samples)
+	minimum = 0.03375 (1 samples)
+	maximum = 0.0675 (1 samples)
+Accepted flit rate average = 0.0497461 (1 samples)
+	minimum = 0.03125 (1 samples)
+	maximum = 0.06875 (1 samples)
+Injected packet size average = 1 (1 samples)
+Accepted packet size average = 1 (1 samples)
+Hops average = 8.93093 (1 samples)
+Total run time 0.211606
