@@ -1,8 +1,19 @@
 # BookSim 2 NoC Project: Experiments and Report Record
 
-Generated on 25 October 2026 from the BookSim 2 checkout in this directory. This
+Generated on 30 October 2026 from the BookSim 2 checkout in this directory. This
 file is the report-ready experiment record. The raw simulator logs and machine
 generated datasets are in this same `results` directory.
+
+## Project team
+
+| Name | Registration number |
+|---|---|
+| Arhan Ghosarwade | 24BCS020 |
+| Veeresh Bellerimath | 24BEC065 |
+| C Sathwik | 24BEC008 |
+
+Department of Computer Science and Engineering, Indian Institute of
+Information Technology Dharwad.
 
 ## 1. Problem statement and objectives
 
@@ -38,19 +49,17 @@ dimension-order routing (`dor_mesh`).
 ## 3. Toolchain and reproducibility
 
 The Windows host did not have a native C++/Flex/Bison toolchain. BookSim was
-built in the installed Ubuntu-26.04 WSL distribution. Flex, Bison, GNU Make,
-and M4 were downloaded as local Debian packages and extracted under `/tmp`;
-the source tree was not modified to install system packages.
+built in the installed Ubuntu-26.04 WSL distribution after installing
+`build-essential`, Flex, and Bison.
 
 Build command:
 
 ```bash
 wsl -d Ubuntu-26.04 -- bash -lc \
-  "cd /mnt/f/Multicore/booksim2/src &&
-   PATH=/tmp/booksim-tools/usr/bin:/usr/bin:/bin
-   M4=/tmp/booksim-tools/usr/bin/m4
-   BISON_PKGDATADIR=/tmp/booksim-tools/usr/share/bison
-   /tmp/booksim-tools/usr/bin/make -j2"
+  "cd /mnt/f/Multicore/booksim2 &&
+   make -C src clean &&
+   make -C src -j2 &&
+   chmod +x src/booksim"
 ```
 
 The executable produced was `src/booksim`. A smoke run completed and printed
@@ -67,20 +76,24 @@ Common settings:
 | VC buffer size | 8 |
 | VC allocator | iSLIP |
 | Switch allocator | iSLIP |
-| Injection-rate samples | 0.02, 0.05, 0.10, 0.15, 0.20, 0.30 |
-| Warmup periods | 1 |
-| Sample period | 200 cycles |
+| Injection-rate samples (Task 1) | 0.02, 0.05, 0.10, 0.15, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90 |
+| Injection-rate samples (Tasks 2/3) | 0.02, 0.05, 0.10, 0.15, 0.20, 0.30, 0.35, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90 |
+| Hotspot samples (Tasks 2/3) | 0.005 through 0.060 in 0.005 steps, then 0.070, 0.080, 0.100 |
+| Warmup periods | 3 |
+| Sample period | 1000 cycles |
 | Simulation count | 1 |
-| Network sizes | 4x4 and 8x8 |
+| Network sizes (Task 1) | 4x4, 6x6, and 8x8 |
 | VC counts | 1, 2, 4, 8 |
 | Traffic | uniform, transpose, bitcomp, hotspot(0) |
+| Repeated seeds (Tasks 2/3) | 1, 2, 3 |
 
 Mesh uses `topology=mesh`, `routing_function=dor`; torus uses
 `topology=torus`, `routing_function=dim_order`. Every row has a corresponding
-raw `.log` file in `results/raw`.
+raw `.log` file in `results/raw` when a simulator attempt was made; unsupported
+torus one-VC rows are recorded as invalid without launching the simulator.
 
 The adaptive-routing subset uses a 4-VC mesh at both 4x4 and 8x8 sizes,
-the same four traffic patterns and injection-rate samples, and compares
+the same four traffic patterns and extended injection-rate samples, and compares
 `routing_function=dor` with `routing_function=adaptive_xy_yx`. BookSim
 internally resolves the latter to `adaptive_xy_yx_mesh`.
 
@@ -119,39 +132,40 @@ The parser takes the final BookSim statistics block and records:
 - `latency`: final average packet latency in cycles;
 - `throughput`: final accepted packet rate;
 - `injection_rate`: configured packet injection rate;
-- `status`: 0 when valid metrics were present and no assertion/invalid-routing
-  error was found.
+- `status`: 0 only when the simulator exit status is zero, both final metrics
+  are present, and no assertion, instability, timeout, or incomplete-run
+  message was found.
 
-This status rule is intentional because this BookSim checkout returns process
-exit code 255 after a normal simulation/drain in some runs even when the final
-statistics are valid.
+This conservative rule prevents partial high-load runs from entering the
+graphs even when they printed an intermediate statistics line.
 
 ## 6. Results
 
-The complete design-space dataset is
-`results/booksim_results.tsv`. It contains 384 attempted configurations:
-336 valid configurations and 48 expected invalid torus configurations. The
-invalid rows are torus with one VC; BookSim's torus dimension-order router
-asserts because it needs at least two VCs for its two virtual-channel classes.
+The complete design-space dataset is `results/booksim_results.tsv`. It contains
+1,152 attempted configurations covering 4x4, 6x6, and 8x8 meshes and tori,
+four traffic patterns, four VC counts, and twelve injection rates. There are
+368 valid rows and 784 invalid rows. The invalid rows include unsupported
+one-VC torus configurations and high-load runs rejected by the simulator's
+instability/assertion checks; invalid rows remain in the table for auditability
+and are excluded from summaries and graphs.
 
-The saturation summary is in `results/summary.tsv`. Saturation throughput is
-reported here as the largest accepted throughput among sampled points whose
-latency remains at or below 1.5 times the minimum latency for that
-topology/size/VC/traffic group. This operational definition should be stated
-in the final submission because the rate sweep is discrete.
+The saturation summary is in `results/summary.tsv`. A saturation point is
+reported only when a repeated near-maximum-throughput plateau is present while
+latency remains within 1.5 times the minimum latency. Otherwise the summary
+records `not observed`; it does not infer saturation from the last tested rate.
 
 Representative 4x4, VC=4 results:
 
 | Topology | Traffic | Minimum latency (cycles) | Selected saturation injection | Selected saturation throughput |
 |---|---|---:|---:|---:|
-| Mesh | Uniform | 15.9859 | 0.30 | 0.297875 |
-| Torus | Uniform | 18.7559 | 0.30 | 0.297656 |
-| Mesh | Transpose | 16.0376 | 0.10 | 0.0977344 |
-| Torus | Transpose | 18.8643 | 0.30 | 0.298047 |
-| Mesh | Bit complement | 22.0407 | 0.15 | 0.150391 |
-| Torus | Bit complement | 19.0155 | 0.30 | 0.298438 |
-| Mesh | Hotspot node 0 | 19.7209 | 0.02 | 0.0200781 |
-| Torus | Hotspot node 0 | 18.8760 | 0.05 | 0.0495312 |
+| Mesh | Uniform | 16.1051 | not observed | NA |
+| Torus | Uniform | 15.8752 | not observed | NA |
+| Mesh | Transpose | 15.7192 | not observed | NA |
+| Torus | Transpose | 15.6216 | not observed | NA |
+| Mesh | Bit complement | 21.9656 | not observed | NA |
+| Torus | Bit complement | 16.0000 | not observed | NA |
+| Mesh | Hotspot node 0 | 18.4144 | not observed | NA |
+| Torus | Hotspot node 0 | 16.2608 | not observed | NA |
 
 The generated plots are:
 
@@ -164,13 +178,13 @@ The adaptive-routing 4x4 uniform-traffic measurements are:
 
 | Injection rate | DOR latency | Adaptive latency | DOR throughput | Adaptive throughput |
 |---:|---:|---:|---:|---:|
-| 0.02 | 16.1161 | 16.3915 | 0.0193125 | 0.0200000 |
-| 0.10 | 16.1243 | 16.0655 | 0.0953125 | 0.0979687 |
-| 0.20 | 16.6186 | 18.4121 | 0.1968750 | 0.1967970 |
-| 0.30 | 19.8430 | 36.4727 | 0.2978750 | 0.2928650 |
+| 0.02 | 16.2000 | 16.2832 | 0.0195469 | 0.0195625 |
+| 0.10 | 16.2198 | 16.2571 | 0.0993958 | 0.0994167 |
+| 0.20 | 16.2044 | 16.2523 | 0.1995630 | 0.1994790 |
+| 0.30 | 16.4612 | 16.5965 | 0.2998120 | 0.2997920 |
 
-In this particular short sweep, adaptive routing is slightly better at rate
-0.10 but worse at the highest tested uniform rate. That is a valid result:
+In this particular sweep, adaptive routing is slightly worse in latency at the
+listed uniform rates. That is a valid result:
 adaptive routing is not automatically superior, and the credit decision
 overhead/choice can interact with allocator state. Non-uniform traffic should
 be emphasized in the presentation because that is where path selection is most
@@ -239,26 +253,28 @@ Task 2 uses the same 4-VC, 8-flit-buffer, one-flit-packet settings for the
 AnyNet hybrid and the 4x4 mesh. The complete result file is
 `results/task2/task2_results.tsv`, with raw logs in `results/task2/raw/`.
 
-The controlled sweep attempted 48 runs:
+The controlled sweep attempted 324 runs:
 
-- 24 mesh runs and 24 hybrid runs;
+- 162 mesh runs and 162 hybrid runs;
 - Uniform, transpose, bit-complement, and hotspot(0) traffic;
-- Six offered injection rates per traffic pattern.
+- Extended offered injection rates, with a finer hotspot sweep;
+- Three independent seeds per configuration.
 
-There were 40 valid runs and 8 invalid high-load hotspot runs. The invalid
-hotspot points contain instability/convergence messages and are not used in
-the plots or saturation summary.
+There were 249 valid runs and 75 invalid high-load runs. Invalid points contain
+instability, timeout, assertion, or incomplete-simulation messages and are not
+used in the plots or saturation summary. The seed summaries report means and
+standard deviations across valid seeds.
 
 Representative valid Task 2 summary:
 
 | Topology | Traffic | Minimum latency (cycles) | Estimated saturation injection | Estimated saturation throughput |
 |---|---|---:|---:|---:|
-| Mesh | Uniform | 16.1051 | 0.30 | 0.299812 |
-| Hybrid | Uniform | 12.8169 | 0.30 | 0.299687 |
-| Mesh | Transpose | 15.7192 | 0.30 | 0.299667 |
-| Hybrid | Transpose | 12.3136 | 0.30 | 0.299563 |
-| Mesh | Hotspot(0) | 18.4144 | 0.05 | 0.0490469 |
-| Hybrid | Hotspot(0) | 13.1952 | 0.05 | 0.0490000 |
+| Mesh | Uniform | 15.9514 | not observed | NA |
+| Hybrid | Uniform | 12.8009 | not observed | NA |
+| Mesh | Transpose | 15.8985 | not observed | NA |
+| Hybrid | Transpose | 12.4180 | not observed | NA |
+| Mesh | Hotspot(0) | 17.8830 | not observed | NA |
+| Hybrid | Hotspot(0) | 12.9772 | not observed | NA |
 
 These results show lower low-load latency for the hybrid graph in the sampled
 cases. The throughput is similar at the sampled saturation point because both
@@ -278,6 +294,8 @@ Task 2 graphs are stored in `results/graphs/task2_task3/`:
 - `task2_uniform_throughput.png`
 - `task2_transpose_latency.png`
 - `task2_transpose_throughput.png`
+- `task2_bitcomp_latency.png`
+- `task2_bitcomp_throughput.png`
 - `task2_hotspot0_latency.png`
 - `task2_hotspot0_throughput.png`
 
@@ -332,28 +350,30 @@ All four low-load smoke tests completed with final statistics:
 | Torus dimension-order | 15.8752 | 0.0195781 |
 | Torus HACR | 16.0016 | 0.0195938 |
 
-The full Task 3 sweep attempted 96 runs:
+The full Task 3 sweep attempted 648 runs:
 
 - Mesh DOR, Mesh HACR, Torus dimension-order, and Torus HACR;
 - Four traffic patterns;
-- Six offered injection rates.
+- Extended offered injection rates, with a finer hotspot sweep;
+- Three independent seeds per configuration.
 
-There were 80 valid runs and 16 invalid high-load hotspot runs. All invalid
-rows are retained in `results/task3/raw/` and excluded from comparative
-graphs and saturation estimates.
+There were 532 valid runs and 116 invalid high-load runs. All invalid rows are
+retained in `results/task3/raw/` and excluded from comparative graphs and
+saturation estimates. The regenerated seed summary records mean and standard
+deviation for each valid configuration.
 
 Representative valid HACR summary:
 
 | Topology | Routing | Traffic | Minimum latency | Estimated saturation throughput |
 |---|---|---|---:|---:|
-| Mesh | DOR | Uniform | 16.1051 | 0.299812 |
-| Mesh | HACR | Uniform | 16.1131 | 0.299875 |
-| Mesh | DOR | Hotspot(0) | 18.4144 | 0.0490469 |
-| Mesh | HACR | Hotspot(0) | 18.4104 | 0.0490312 |
-| Torus | Dimension-order | Uniform | 15.8752 | 0.299667 |
-| Torus | HACR | Uniform | 16.0016 | 0.299604 |
-| Torus | Dimension-order | Hotspot(0) | 16.2608 | 0.0490156 |
-| Torus | HACR | Hotspot(0) | 16.2512 | 0.0490156 |
+| Mesh | DOR | Uniform | 15.9514 | not observed |
+| Mesh | HACR | Uniform | 15.9683 | not observed |
+| Mesh | DOR | Hotspot(0) | 17.8830 | not observed |
+| Mesh | HACR | Hotspot(0) | 17.9001 | not observed |
+| Torus | Dimension-order | Uniform | 15.9530 | 0.7988 at 0.80 |
+| Torus | HACR | Uniform | 15.9202 | not observed |
+| Torus | Dimension-order | Hotspot(0) | 15.9953 | not observed |
+| Torus | HACR | Hotspot(0) | 16.0007 | not observed |
 
 HACR is not uniformly better: its measured minimum latency and throughput are
 very close to the baseline, with small wins in some hotspot cases and small
@@ -367,9 +387,18 @@ Task 3 graphs are stored in `results/graphs/task2_task3/`, including:
 - `task3_mesh_uniform_throughput.png`
 - `task3_mesh_transpose_latency.png`
 - `task3_mesh_transpose_throughput.png`
+- `task3_mesh_bitcomp_latency.png`
+- `task3_mesh_bitcomp_throughput.png`
 - `task3_mesh_hotspot0_latency.png`
 - `task3_mesh_hotspot0_throughput.png`
-- Corresponding six Torus graphs.
+- `task3_torus_uniform_latency.png`
+- `task3_torus_uniform_throughput.png`
+- `task3_torus_transpose_latency.png`
+- `task3_torus_transpose_throughput.png`
+- `task3_torus_bitcomp_latency.png`
+- `task3_torus_bitcomp_throughput.png`
+- `task3_torus_hotspot0_latency.png`
+- `task3_torus_hotspot0_throughput.png`
 
 ## 11. Final completion evidence
 
@@ -380,7 +409,7 @@ The following required artifacts are now present:
 - Hybrid and mesh Task 2 configurations.
 - HACR mesh and torus source implementation.
 - HACR and baseline Task 3 configurations.
-- Six successful smoke-test logs.
+- Successful Mesh/Torus DOR and HACR smoke-test outputs.
 - `results/task2/task2_results.tsv` and raw logs.
 - `results/task3/task3_results.tsv` and raw logs.
 - Task 2 and Task 3 latency/throughput graphs.
