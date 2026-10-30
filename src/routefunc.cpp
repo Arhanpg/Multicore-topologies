@@ -1906,14 +1906,19 @@ void hacr_min_adapt_torus(const Router *r, const Flit *f, int in_channel,
     return;
   }
 
+  const int in_vc = (in_channel == 2 * gN) ? vcEnd : f->vc;
   int escape_port;
+  if (in_vc <= vcBegin + 1) {
+    dor_next_torus(r->GetID(), f->dest, in_channel, &escape_port,
+                   &f->ph, false);
+    outputs->AddRange(escape_port, vcBegin + f->ph,
+                      vcBegin + f->ph, 0);
+    return;
+  }
   dor_next_torus(r->GetID(), f->dest, 2 * gN, &escape_port,
                  &f->ph, false);
   outputs->AddRange(escape_port, vcBegin + f->ph,
                     vcBegin + f->ph, 0);
-  if (f->vc >= vcBegin && f->vc <= vcBegin + 1) {
-    return;
-  }
   if (vcEnd <= vcBegin + 1) {
     return;
   }

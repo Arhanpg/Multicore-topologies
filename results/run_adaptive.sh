@@ -12,7 +12,12 @@ printf 'routing\tsize\tvcs\ttraffic\tinjection_rate\tlatency\tthroughput\tstatus
 for routing in dor adaptive_xy_yx; do
   for size in 4 8; do
     for traffic in uniform transpose bitcomp hotspot\(0\); do
-      for rate in 0.02 0.05 0.10 0.15 0.20 0.30; do
+      if [ "$traffic" = "hotspot(0)" ]; then
+        rates="0.005 0.010 0.015 0.020 0.025 0.030 0.035 0.040 0.045 0.050 0.055 0.060 0.070 0.080 0.100"
+      else
+        rates="0.02 0.05 0.10 0.15 0.20 0.30 0.35 0.40 0.50 0.60 0.70 0.80 0.90"
+      fi
+      for rate in $rates; do
         tag="adaptive_${routing}_${size}x${size}_vc4_${traffic//[()]/}_${rate//./p}"
         log="$RAW/${tag}.log"
         "$BOOKSIM" "$ROOT/configs/matched/mesh_dor_4x4_vc4.conf" \

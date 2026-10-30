@@ -26,10 +26,19 @@ def saturation(rows):
     for key, values in sorted(grouped.items()):
         values.sort(key=lambda r: float(r["injection_rate"]))
         minimum = min(float(r["latency"]) for r in values)
-        limit = minimum * 1.5
-        below_limit = [r for r in values if float(r["latency"]) <= limit]
-        reference = max(below_limit or values, key=lambda r: float(r["throughput"]))
-        summary.append((*key, reference["injection_rate"], reference["throughput"], minimum))
+        maximum_throughput = max(float(r["throughput"]) for r in values)
+        plateau = [
+            r for index, r in enumerate(values[:-1])
+            if float(r["throughput"]) >= 0.95 * maximum_throughput
+            and any(float(later["throughput"]) >= 0.95 * maximum_throughput
+                    for later in values[index + 1:])
+            and float(r["latency"]) <= 1.5 * minimum
+        ]
+        if plateau:
+            reference = plateau[0]
+            summary.append((*key, reference["injection_rate"], reference["throughput"], minimum))
+        else:
+            summary.append((*key, "not observed", "NA", minimum))
     return summary
 
 

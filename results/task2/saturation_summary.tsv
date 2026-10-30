@@ -1,9 +1,9 @@
 topology	traffic	saturation_injection	saturation_throughput	minimum_latency
-hybrid	bitcomp	0.30	0.299687	14.0112
-hybrid	hotspot(0)	0.05	0.049	13.1952
-hybrid	transpose	0.30	0.299563	12.3136
-hybrid	uniform	0.30	0.299687	12.8169
-mesh	bitcomp	0.30	0.299938	21.9656
-mesh	hotspot(0)	0.05	0.0490469	18.4144
-mesh	transpose	0.30	0.299667	15.7192
-mesh	uniform	0.30	0.299812	16.1051
+hybrid	bitcomp	not observed	NA	14.0112
+hybrid	hotspot(0)	not observed	NA	13.1952
+hybrid	transpose	not observed	NA	12.3136
+hybrid	uniform	not observed	NA	12.8169
+mesh	bitcomp	not observed	NA	21.9656
+mesh	hotspot(0)	not observed	NA	18.4144
+mesh	transpose	not observed	NA	15.7192
+mesh	uniform	not observed	NA	16.1051
