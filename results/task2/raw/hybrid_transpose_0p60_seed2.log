@@ -1,0 +1,681 @@
+BEGIN Configuration File: /mnt/f/Multicore/booksim2/configs/task2/hybrid_anynet_4x4.conf
+topology = anynet;
+network_file = results/task2/hybrid_torus_express_4x4.net;
+routing_function = min;
+num_vcs = 4;
+vc_buf_size = 8;
+packet_size = 1;
+traffic = uniform;
+injection_rate = 0.02;
+sim_type = latency;
+sample_period = 1000;
+warmup_periods = 3;
+sim_count = 1;
+vc_allocator = islip;
+sw_allocator = islip;
+alloc_iters = 1;
+credit_delay = 2;
+routing_delay = 0;
+vc_alloc_delay = 1;
+sw_alloc_delay = 1;
+st_final_delay = 1;
+input_speedup = 1;
+output_speedup = 1;
+internal_speedup = 1.0;
+
+END Configuration File: /mnt/f/Multicore/booksim2/configs/task2/hybrid_anynet_4x4.conf
+OVERRIDE Parameter: traffic=transpose
+OVERRIDE Parameter: injection_rate=0.60
+OVERRIDE Parameter: seed=2
+========================Network File Parsed=================
+******************node listing**********************
+Node 0	Router 0
+Node 1	Router 1
+Node 2	Router 2
+Node 3	Router 3
+Node 4	Router 4
+Node 5	Router 5
+Node 6	Router 6
+Node 7	Router 7
+Node 8	Router 8
+Node 9	Router 9
+Node 10	Router 10
+Node 11	Router 11
+Node 12	Router 12
+Node 13	Router 13
+Node 14	Router 14
+Node 15	Router 15
+
+****************router to node listing*************
+Router 0
+	 Node 0 lat 1
+Router 1
+	 Node 1 lat 1
+Router 2
+	 Node 2 lat 1
+Router 3
+	 Node 3 lat 1
+Router 4
+	 Node 4 lat 1
+Router 5
+	 Node 5 lat 1
+Router 6
+	 Node 6 lat 1
+Router 7
+	 Node 7 lat 1
+Router 8
+	 Node 8 lat 1
+Router 9
+	 Node 9 lat 1
+Router 10
+	 Node 10 lat 1
+Router 11
+	 Node 11 lat 1
+Router 12
+	 Node 12 lat 1
+Router 13
+	 Node 13 lat 1
+Router 14
+	 Node 14 lat 1
+Router 15
+	 Node 15 lat 1
+
+*****************router to router listing************
+Router 0
+	 Router 1 lat 1
+	 Router 3 lat 1
+	 Router 4 lat 1
+	 Router 5 lat 1
+	 Router 12 lat 1
+Router 1
+	 Router 0 lat 1
+	 Router 2 lat 1
+	 Router 5 lat 1
+	 Router 13 lat 1
+Router 2
+	 Router 1 lat 1
+	 Router 3 lat 1
+	 Router 6 lat 1
+	 Router 7 lat 1
+	 Router 14 lat 1
+Router 3
+	 Router 0 lat 1
+	 Router 2 lat 1
+	 Router 6 lat 1
+	 Router 7 lat 1
+	 Router 15 lat 1
+Router 4
+	 Router 0 lat 1
+	 Router 5 lat 1
+	 Router 7 lat 1
+	 Router 8 lat 1
+Router 5
+	 Router 0 lat 1
+	 Router 1 lat 1
+	 Router 4 lat 1
+	 Router 6 lat 1
+	 Router 8 lat 1
+	 Router 9 lat 1
+Router 6
+	 Router 2 lat 1
+	 Router 3 lat 1
+	 Router 5 lat 1
+	 Router 7 lat 1
+	 Router 10 lat 1
+	 Router 11 lat 1
+Router 7
+	 Router 2 lat 1
+	 Router 3 lat 1
+	 Router 4 lat 1
+	 Router 6 lat 1
+	 Router 10 lat 1
+	 Router 11 lat 1
+Router 8
+	 Router 4 lat 1
+	 Router 5 lat 1
+	 Router 9 lat 1
+	 Router 11 lat 1
+	 Router 12 lat 1
+	 Router 13 lat 1
+Router 9
+	 Router 5 lat 1
+	 Router 8 lat 1
+	 Router 10 lat 1
+	 Router 12 lat 1
+	 Router 13 lat 1
+Router 10
+	 Router 6 lat 1
+	 Router 7 lat 1
+	 Router 9 lat 1
+	 Router 11 lat 1
+	 Router 14 lat 1
+	 Router 15 lat 1
+Router 11
+	 Router 6 lat 1
+	 Router 7 lat 1
+	 Router 8 lat 1
+	 Router 10 lat 1
+	 Router 14 lat 1
+	 Router 15 lat 1
+Router 12
+	 Router 0 lat 1
+	 Router 8 lat 1
+	 Router 9 lat 1
+	 Router 13 lat 1
+	 Router 15 lat 1
+Router 13
+	 Router 1 lat 1
+	 Router 8 lat 1
+	 Router 9 lat 1
+	 Router 12 lat 1
+	 Router 14 lat 1
+Router 14
+	 Router 2 lat 1
+	 Router 10 lat 1
+	 Router 11 lat 1
+	 Router 13 lat 1
+	 Router 15 lat 1
+Router 15
+	 Router 3 lat 1
+	 Router 10 lat 1
+	 Router 11 lat 1
+	 Router 12 lat 1
+	 Router 14 lat 1
+==========================Node to Router =====================
+router 0 radix 6
+	 connected to node 0 at outport 0 lat 1
+router 1 radix 5
+	 connected to node 1 at outport 0 lat 1
+router 2 radix 6
+	 connected to node 2 at outport 0 lat 1
+router 3 radix 6
+	 connected to node 3 at outport 0 lat 1
+router 4 radix 5
+	 connected to node 4 at outport 0 lat 1
+router 5 radix 7
+	 connected to node 5 at outport 0 lat 1
+router 6 radix 7
+	 connected to node 6 at outport 0 lat 1
+router 7 radix 7
+	 connected to node 7 at outport 0 lat 1
+router 8 radix 7
+	 connected to node 8 at outport 0 lat 1
+router 9 radix 6
+	 connected to node 9 at outport 0 lat 1
+router 10 radix 7
+	 connected to node 10 at outport 0 lat 1
+router 11 radix 7
+	 connected to node 11 at outport 0 lat 1
+router 12 radix 6
+	 connected to node 12 at outport 0 lat 1
+router 13 radix 6
+	 connected to node 13 at outport 0 lat 1
+router 14 radix 6
+	 connected to node 14 at outport 0 lat 1
+router 15 radix 6
+	 connected to node 15 at outport 0 lat 1
+==========================Router to Router =====================
+router 0
+	 connected to router 1 using link 0 at outport 1 lat 1
+	 connected to router 3 using link 1 at outport 2 lat 1
+	 connected to router 4 using link 2 at outport 3 lat 1
+	 connected to router 5 using link 3 at outport 4 lat 1
+	 connected to router 12 using link 4 at outport 5 lat 1
+router 1
+	 connected to router 0 using link 5 at outport 1 lat 1
+	 connected to router 2 using link 6 at outport 2 lat 1
+	 connected to router 5 using link 7 at outport 3 lat 1
+	 connected to router 13 using link 8 at outport 4 lat 1
+router 2
+	 connected to router 1 using link 9 at outport 1 lat 1
+	 connected to router 3 using link 10 at outport 2 lat 1
+	 connected to router 6 using link 11 at outport 3 lat 1
+	 connected to router 7 using link 12 at outport 4 lat 1
+	 connected to router 14 using link 13 at outport 5 lat 1
+router 3
+	 connected to router 0 using link 14 at outport 1 lat 1
+	 connected to router 2 using link 15 at outport 2 lat 1
+	 connected to router 6 using link 16 at outport 3 lat 1
+	 connected to router 7 using link 17 at outport 4 lat 1
+	 connected to router 15 using link 18 at outport 5 lat 1
+router 4
+	 connected to router 0 using link 19 at outport 1 lat 1
+	 connected to router 5 using link 20 at outport 2 lat 1
+	 connected to router 7 using link 21 at outport 3 lat 1
+	 connected to router 8 using link 22 at outport 4 lat 1
+router 5
+	 connected to router 0 using link 23 at outport 1 lat 1
+	 connected to router 1 using link 24 at outport 2 lat 1
+	 connected to router 4 using link 25 at outport 3 lat 1
+	 connected to router 6 using link 26 at outport 4 lat 1
+	 connected to router 8 using link 27 at outport 5 lat 1
+	 connected to router 9 using link 28 at outport 6 lat 1
+router 6
+	 connected to router 2 using link 29 at outport 1 lat 1
+	 connected to router 3 using link 30 at outport 2 lat 1
+	 connected to router 5 using link 31 at outport 3 lat 1
+	 connected to router 7 using link 32 at outport 4 lat 1
+	 connected to router 10 using link 33 at outport 5 lat 1
+	 connected to router 11 using link 34 at outport 6 lat 1
+router 7
+	 connected to router 2 using link 35 at outport 1 lat 1
+	 connected to router 3 using link 36 at outport 2 lat 1
+	 connected to router 4 using link 37 at outport 3 lat 1
+	 connected to router 6 using link 38 at outport 4 lat 1
+	 connected to router 10 using link 39 at outport 5 lat 1
+	 connected to router 11 using link 40 at outport 6 lat 1
+router 8
+	 connected to router 4 using link 41 at outport 1 lat 1
+	 connected to router 5 using link 42 at outport 2 lat 1
+	 connected to router 9 using link 43 at outport 3 lat 1
+	 connected to router 11 using link 44 at outport 4 lat 1
+	 connected to router 12 using link 45 at outport 5 lat 1
+	 connected to router 13 using link 46 at outport 6 lat 1
+router 9
+	 connected to router 5 using link 47 at outport 1 lat 1
+	 connected to router 8 using link 48 at outport 2 lat 1
+	 connected to router 10 using link 49 at outport 3 lat 1
+	 connected to router 12 using link 50 at outport 4 lat 1
+	 connected to router 13 using link 51 at outport 5 lat 1
+router 10
+	 connected to router 6 using link 52 at outport 1 lat 1
+	 connected to router 7 using link 53 at outport 2 lat 1
+	 connected to router 9 using link 54 at outport 3 lat 1
+	 connected to router 11 using link 55 at outport 4 lat 1
+	 connected to router 14 using link 56 at outport 5 lat 1
+	 connected to router 15 using link 57 at outport 6 lat 1
+router 11
+	 connected to router 6 using link 58 at outport 1 lat 1
+	 connected to router 7 using link 59 at outport 2 lat 1
+	 connected to router 8 using link 60 at outport 3 lat 1
+	 connected to router 10 using link 61 at outport 4 lat 1
+	 connected to router 14 using link 62 at outport 5 lat 1
+	 connected to router 15 using link 63 at outport 6 lat 1
+router 12
+	 connected to router 0 using link 64 at outport 1 lat 1
+	 connected to router 8 using link 65 at outport 2 lat 1
+	 connected to router 9 using link 66 at outport 3 lat 1
+	 connected to router 13 using link 67 at outport 4 lat 1
+	 connected to router 15 using link 68 at outport 5 lat 1
+router 13
+	 connected to router 1 using link 69 at outport 1 lat 1
+	 connected to router 8 using link 70 at outport 2 lat 1
+	 connected to router 9 using link 71 at outport 3 lat 1
+	 connected to router 12 using link 72 at outport 4 lat 1
+	 connected to router 14 using link 73 at outport 5 lat 1
+router 14
+	 connected to router 2 using link 74 at outport 1 lat 1
+	 connected to router 10 using link 75 at outport 2 lat 1
+	 connected to router 11 using link 76 at outport 3 lat 1
+	 connected to router 13 using link 77 at outport 4 lat 1
+	 connected to router 15 using link 78 at outport 5 lat 1
+router 15
+	 connected to router 3 using link 79 at outport 1 lat 1
+	 connected to router 10 using link 80 at outport 2 lat 1
+	 connected to router 11 using link 81 at outport 3 lat 1
+	 connected to router 12 using link 82 at outport 4 lat 1
+	 connected to router 14 using link 83 at outport 5 lat 1
+========================== Routing table  =====================
+Class 0:
+Packet latency average = 30.1909
+	minimum = 6
+	maximum = 359
+Network latency average = 26.5091
+	minimum = 6
+	maximum = 294
+Slowest packet = 4441
+Flit latency average = 26.5091
+	minimum = 6
+	maximum = 294
+Slowest flit = 6637
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.583937
+	minimum = 0.513 (at node 8)
+	maximum = 0.621 (at node 10)
+Accepted packet rate average = 0.564625
+	minimum = 0.408 (at node 2)
+	maximum = 0.617 (at node 10)
+Injected flit rate average = 0.583937
+	minimum = 0.513 (at node 8)
+	maximum = 0.621 (at node 10)
+Accepted flit rate average= 0.564625
+	minimum = 0.408 (at node 2)
+	maximum = 0.617 (at node 10)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 310 (0 measured)
+latency change    = 1
+throughput change = 1
+Class 0:
+Packet latency average = 49.7649
+	minimum = 6
+	maximum = 682
+Network latency average = 30.4823
+	minimum = 6
+	maximum = 303
+Slowest packet = 4441
+Flit latency average = 30.4823
+	minimum = 6
+	maximum = 303
+Slowest flit = 8239
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.576
+	minimum = 0.474 (at node 8)
+	maximum = 0.611 (at node 14)
+Accepted packet rate average = 0.566531
+	minimum = 0.4205 (at node 2)
+	maximum = 0.6095 (at node 11)
+Injected flit rate average = 0.576
+	minimum = 0.474 (at node 8)
+	maximum = 0.611 (at node 14)
+Accepted flit rate average= 0.566531
+	minimum = 0.4205 (at node 2)
+	maximum = 0.6095 (at node 11)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 305 (0 measured)
+latency change    = 0.393329
+throughput change = 0.00336477
+Class 0:
+Packet latency average = 103.458
+	minimum = 6
+	maximum = 928
+Network latency average = 33.7459
+	minimum = 6
+	maximum = 281
+Slowest packet = 16766
+Flit latency average = 33.7459
+	minimum = 6
+	maximum = 281
+Slowest flit = 22421
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.572125
+	minimum = 0.444 (at node 8)
+	maximum = 0.62 (at node 7)
+Accepted packet rate average = 0.571125
+	minimum = 0.443 (at node 2)
+	maximum = 0.616 (at node 13)
+Injected flit rate average = 0.572125
+	minimum = 0.444 (at node 8)
+	maximum = 0.62 (at node 7)
+Accepted flit rate average= 0.571125
+	minimum = 0.443 (at node 2)
+	maximum = 0.616 (at node 13)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 320 (0 measured)
+latency change    = 0.518985
+throughput change = 0.00804334
+Warmed up ...Time used is 3000 cycles
+Class 0:
+Packet latency average = 118.944
+	minimum = 6
+	maximum = 1230
+Network latency average = 30.0561
+	minimum = 6
+	maximum = 297
+Slowest packet = 27606
+Flit latency average = 34.0323
+	minimum = 6
+	maximum = 297
+Slowest flit = 33665
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.576375
+	minimum = 0.441 (at node 8)
+	maximum = 0.63 (at node 14)
+Accepted packet rate average = 0.576313
+	minimum = 0.443 (at node 2)
+	maximum = 0.632 (at node 11)
+Injected flit rate average = 0.576375
+	minimum = 0.441 (at node 8)
+	maximum = 0.63 (at node 14)
+Accepted flit rate average= 0.576313
+	minimum = 0.443 (at node 2)
+	maximum = 0.632 (at node 11)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 322 (322 measured)
+latency change    = 0.130193
+throughput change = 0.00900119
+Class 0:
+Packet latency average = 144.005
+	minimum = 6
+	maximum = 1502
+Network latency average = 32.0345
+	minimum = 6
+	maximum = 298
+Slowest packet = 27606
+Flit latency average = 33.9915
+	minimum = 6
+	maximum = 298
+Slowest flit = 37224
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.575281
+	minimum = 0.434 (at node 8)
+	maximum = 0.6255 (at node 14)
+Accepted packet rate average = 0.575375
+	minimum = 0.435 (at node 2)
+	maximum = 0.6275 (at node 11)
+Injected flit rate average = 0.575281
+	minimum = 0.434 (at node 8)
+	maximum = 0.6255 (at node 14)
+Accepted flit rate average= 0.575375
+	minimum = 0.435 (at node 2)
+	maximum = 0.6275 (at node 11)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 318 (318 measured)
+latency change    = 0.174032
+throughput change = 0.00162937
+Class 0:
+Packet latency average = 165.067
+	minimum = 6
+	maximum = 1812
+Network latency average = 32.7496
+	minimum = 6
+	maximum = 300
+Slowest packet = 27606
+Flit latency average = 34.0507
+	minimum = 6
+	maximum = 300
+Slowest flit = 45818
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.573104
+	minimum = 0.434333 (at node 8)
+	maximum = 0.612333 (at node 14)
+Accepted packet rate average = 0.573292
+	minimum = 0.435333 (at node 2)
+	maximum = 0.614333 (at node 11)
+Injected flit rate average = 0.573104
+	minimum = 0.434333 (at node 8)
+	maximum = 0.612333 (at node 14)
+Accepted flit rate average= 0.573292
+	minimum = 0.435333 (at node 2)
+	maximum = 0.614333 (at node 11)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 312 (312 measured)
+latency change    = 0.127594
+throughput change = 0.00363399
+Class 0:
+Packet latency average = 183.225
+	minimum = 6
+	maximum = 2048
+Network latency average = 33.0329
+	minimum = 6
+	maximum = 300
+Slowest packet = 27606
+Flit latency average = 34.005
+	minimum = 6
+	maximum = 300
+Slowest flit = 45818
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.573984
+	minimum = 0.4355 (at node 8)
+	maximum = 0.6135 (at node 9)
+Accepted packet rate average = 0.574
+	minimum = 0.43625 (at node 2)
+	maximum = 0.61375 (at node 6)
+Injected flit rate average = 0.573984
+	minimum = 0.4355 (at node 8)
+	maximum = 0.6135 (at node 9)
+Accepted flit rate average= 0.574
+	minimum = 0.43625 (at node 2)
+	maximum = 0.61375 (at node 6)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 320 (320 measured)
+latency change    = 0.0991007
+throughput change = 0.00123403
+Class 0:
+Packet latency average = 199.683
+	minimum = 6
+	maximum = 2326
+Network latency average = 33.2857
+	minimum = 6
+	maximum = 330
+Slowest packet = 27606
+Flit latency average = 34.0632
+	minimum = 6
+	maximum = 330
+Slowest flit = 68107
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.572937
+	minimum = 0.4324 (at node 8)
+	maximum = 0.6156 (at node 5)
+Accepted packet rate average = 0.57285
+	minimum = 0.4326 (at node 2)
+	maximum = 0.6158 (at node 5)
+Injected flit rate average = 0.572937
+	minimum = 0.4324 (at node 8)
+	maximum = 0.6156 (at node 5)
+Accepted flit rate average= 0.57285
+	minimum = 0.4326 (at node 2)
+	maximum = 0.6158 (at node 5)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 327 (327 measured)
+latency change    = 0.082422
+throughput change = 0.00200751
+Class 0:
+Packet latency average = 217.295
+	minimum = 6
+	maximum = 2579
+Network latency average = 33.3898
+	minimum = 6
+	maximum = 330
+Slowest packet = 27606
+Flit latency average = 34.0377
+	minimum = 6
+	maximum = 330
+Slowest flit = 68107
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.572271
+	minimum = 0.433833 (at node 8)
+	maximum = 0.612333 (at node 5)
+Accepted packet rate average = 0.572333
+	minimum = 0.434 (at node 2)
+	maximum = 0.612667 (at node 5)
+Injected flit rate average = 0.572271
+	minimum = 0.433833 (at node 8)
+	maximum = 0.612333 (at node 5)
+Accepted flit rate average= 0.572333
+	minimum = 0.434 (at node 2)
+	maximum = 0.612667 (at node 5)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 315 (315 measured)
+latency change    = 0.0810505
+throughput change = 0.000902737
+Class 0:
+Packet latency average = 232.922
+	minimum = 6
+	maximum = 2911
+Network latency average = 33.4732
+	minimum = 6
+	maximum = 330
+Slowest packet = 27606
+Flit latency average = 34.0273
+	minimum = 6
+	maximum = 330
+Slowest flit = 68107
+Fragmentation average = 0
+	minimum = 0
+	maximum = 0
+Injected packet rate average = 0.573018
+	minimum = 0.430429 (at node 8)
+	maximum = 0.608 (at node 5)
+Accepted packet rate average = 0.573098
+	minimum = 0.431143 (at node 2)
+	maximum = 0.608286 (at node 5)
+Injected flit rate average = 0.573018
+	minimum = 0.430429 (at node 8)
+	maximum = 0.608 (at node 5)
+Accepted flit rate average= 0.573098
+	minimum = 0.431143 (at node 2)
+	maximum = 0.608286 (at node 5)
+Injected packet length average = 1
+Accepted packet length average = 1
+Total in-flight flits = 313 (313 measured)
+latency change    = 0.0670921
+throughput change = 0.00133464
+Draining all recorded packets ...
+Class 0:
+Remaining flits: 98346 98401 98550 98577 98622 98691 98726 98786 98807 98855 [...] (326 flits)
+Measured flits: 98346 98401 98550 98577 98622 98691 98726 98786 98807 98855 [...] (227 flits)
+Class 0:
+Remaining flits: 107979 108002 108009 108029 108068 108085 108103 108121 108137 108154 [...] (312 flits)
+Measured flits: 107979 108002 108009 108029 108068 108085 108103 108121 108137 108154 [...] (187 flits)
+Class 0:
+Remaining flits: 116585 116632 116666 116729 116800 116846 116878 116903 116930 117007 [...] (318 flits)
+Measured flits: 116585 116632 116666 116729 116800 116846 116878 116903 116930 117007 [...] (191 flits)
+Draining remaining packets ...
+Time taken is 14121 cycles
+====== Overall Traffic Statistics ======
+====== Traffic class 0 ======
+Packet latency average = 391.514 (1 samples)
+	minimum = 6 (1 samples)
+	maximum = 3924 (1 samples)
+Network latency average = 42.4624 (1 samples)
+	minimum = 6 (1 samples)
+	maximum = 330 (1 samples)
+Flit latency average = 34.3338 (1 samples)
+	minimum = 6 (1 samples)
+	maximum = 330 (1 samples)
+Fragmentation average = 0 (1 samples)
+	minimum = 0 (1 samples)
+	maximum = 0 (1 samples)
+Injected packet rate average = 0.573018 (1 samples)
+	minimum = 0.430429 (1 samples)
+	maximum = 0.608 (1 samples)
+Accepted packet rate average = 0.573098 (1 samples)
+	minimum = 0.431143 (1 samples)
+	maximum = 0.608286 (1 samples)
+Injected flit rate average = 0.573018 (1 samples)
+	minimum = 0.430429 (1 samples)
+	maximum = 0.608 (1 samples)
+Accepted flit rate average = 0.573098 (1 samples)
+	minimum = 0.431143 (1 samples)
+	maximum = 0.608286 (1 samples)
+Injected packet size average = 1 (1 samples)
+Accepted packet size average = 1 (1 samples)
+Hops average = 2.64311 (1 samples)
+Total run time 0.978458

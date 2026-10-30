@@ -1,92 +1,31 @@
-BEGIN Configuration File: /mnt/f/Multicore/booksim2/runfiles/meshconfig
-// $Id $
-
-// Copyright (c) 2007-2015, Trustees of The Leland Stanford Junior University
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are met:
-//
-// Redistributions of source code must retain the above copyright notice, this
-// list of conditions and the following disclaimer.
-// Redistributions in binary form must reproduce the above copyright notice,
-// this list of conditions and the following disclaimer in the documentation
-// and/or other materials provided with the distribution.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-// POSSIBILITY OF SUCH DAMAGE.
-
-
-//
-// Flow control
-//
-
-num_vcs     = 16;
+BEGIN Configuration File: /mnt/f/Multicore/booksim2/configs/matched/mesh_dor_4x4_vc4.conf
+topology = mesh;
+k = 4;
+n = 2;
+routing_function = dor;
+num_vcs = 4;
 vc_buf_size = 8;
-
-wait_for_tail_credit = 1;
-
-
-vc_allocator = islip; 
+packet_size = 1;
+traffic = uniform;
+injection_rate = 0.02;
+sim_type = latency;
+sample_period = 1000;
+warmup_periods = 3;
+sim_count = 1;
+vc_allocator = islip;
 sw_allocator = islip;
-alloc_iters  = 2;
-
-credit_delay   = 2;
-routing_delay  = 0;
+alloc_iters = 1;
+wait_for_tail_credit = 0;
+credit_delay = 2;
+routing_delay = 0;
 vc_alloc_delay = 1;
 sw_alloc_delay = 1;
 st_final_delay = 1;
+input_speedup = 1;
+output_speedup = 1;
+internal_speedup = 1.0;
 
-input_speedup     = 1;
-output_speedup    = 1;
-internal_speedup  = 1.0;
-
-//
-// Traffic
-//
-
-sim_type = latency;
-
-warmup_periods = 3;
-
-sample_period  = 1000;  
-
-sim_count          = 1;
-
-
-
-//topoogy
-
-topology = mesh;
-k  = 8;
-n  = 2;
-//
-// Routing
-
-
-routing_function = dor;
-
-packet_size = 1;
-
-use_read_write = 0;
-
-traffic       = uniform;
-
-injection_rate = 0.2;
-
-
-
-
-END Configuration File: /mnt/f/Multicore/booksim2/runfiles/meshconfig
+END Configuration File: /mnt/f/Multicore/booksim2/configs/matched/mesh_dor_4x4_vc4.conf
 OVERRIDE Parameter: topology=mesh
 OVERRIDE Parameter: k=8
 OVERRIDE Parameter: n=2
@@ -95,139 +34,76 @@ OVERRIDE Parameter: num_vcs=4
 OVERRIDE Parameter: traffic=hotspot(0)
 OVERRIDE Parameter: injection_rate=0.10
 OVERRIDE Parameter: packet_size=1
-OVERRIDE Parameter: sample_period=200
-OVERRIDE Parameter: warmup_periods=1
+OVERRIDE Parameter: sample_period=1000
+OVERRIDE Parameter: warmup_periods=3
 OVERRIDE Parameter: sim_count=1
+OVERRIDE Parameter: alloc_iters=1
+OVERRIDE Parameter: wait_for_tail_credit=0
 Class 0:
-Packet latency average = 56.9892
+Packet latency average = 212.835
 	minimum = 6
-	maximum = 169
-Network latency average = 56.3656
+	maximum = 954
+Network latency average = 212.835
 	minimum = 6
-	maximum = 169
-Slowest packet = 17
-Flit latency average = 56.3656
+	maximum = 954
+Slowest packet = 80
+Flit latency average = 212.835
 	minimum = 6
-	maximum = 169
-Slowest flit = 17
+	maximum = 954
+Slowest flit = 80
 Fragmentation average = 0
 	minimum = 0
 	maximum = 0
-Injected packet rate average = 0.04625
-	minimum = 0.02 (at node 32)
-	maximum = 0.08 (at node 0)
-Accepted packet rate average = 0.00726563
+Injected packet rate average = 0.0725
+	minimum = 0.035 (at node 40)
+	maximum = 0.122 (at node 31)
+Accepted packet rate average = 0.0153437
 	minimum = 0 (at node 1)
-	maximum = 0.465 (at node 0)
-Injected flit rate average = 0.04625
-	minimum = 0.02 (at node 32)
-	maximum = 0.08 (at node 0)
-Accepted flit rate average= 0.00726563
+	maximum = 0.982 (at node 0)
+Injected flit rate average = 0.0725
+	minimum = 0.035 (at node 40)
+	maximum = 0.122 (at node 31)
+Accepted flit rate average= 0.0153437
 	minimum = 0 (at node 1)
-	maximum = 0.465 (at node 0)
+	maximum = 0.982 (at node 0)
 Injected packet length average = 1
 Accepted packet length average = 1
-Total in-flight flits = 559 (0 measured)
+Total in-flight flits = 3704 (0 measured)
 latency change    = 1
 throughput change = 1
-Warmed up ...Time used is 200 cycles
 Class 0:
-Packet latency average = 61.8864
+Packet latency average = 377.729
 	minimum = 6
-	maximum = 160
-Network latency average = 44.9318
+	maximum = 1909
+Network latency average = 375.277
 	minimum = 6
-	maximum = 160
-Slowest packet = 657
-Flit latency average = 127.33
+	maximum = 1909
+Slowest packet = 143
+Flit latency average = 375.277
 	minimum = 6
-	maximum = 387
-Slowest flit = 57
+	maximum = 1909
+Slowest flit = 143
 Fragmentation average = 0
 	minimum = 0
 	maximum = 0
-Injected packet rate average = 0.008125
-	minimum = 0 (at node 5)
-	maximum = 0.105 (at node 0)
-Accepted packet rate average = 0.0078125
+Injected packet rate average = 0.0459922
+	minimum = 0.019 (at node 40)
+	maximum = 0.108 (at node 0)
+Accepted packet rate average = 0.0154844
 	minimum = 0 (at node 1)
-	maximum = 0.5 (at node 0)
-Injected flit rate average = 0.008125
-	minimum = 0 (at node 5)
-	maximum = 0.105 (at node 0)
-Accepted flit rate average= 0.0078125
+	maximum = 0.991 (at node 0)
+Injected flit rate average = 0.0459922
+	minimum = 0.019 (at node 40)
+	maximum = 0.108 (at node 0)
+Accepted flit rate average= 0.0154844
 	minimum = 0 (at node 1)
-	maximum = 0.5 (at node 0)
+	maximum = 0.991 (at node 0)
 Injected packet length average = 1
 Accepted packet length average = 1
-Total in-flight flits = 565 (62 measured)
-latency change    = 0.0791308
-throughput change = 0.07
-Class 0:
-Packet latency average = 100.116
-	minimum = 6
-	maximum = 414
-Network latency average = 61.1736
-	minimum = 6
-	maximum = 288
-Slowest packet = 685
-Flit latency average = 139.295
-	minimum = 6
-	maximum = 588
-Slowest flit = 49
-Fragmentation average = 0
-	minimum = 0
-	maximum = 0
-Injected packet rate average = 0.00800781
-	minimum = 0 (at node 7)
-	maximum = 0.11 (at node 1)
-Accepted packet rate average = 0.0078125
-	minimum = 0 (at node 1)
-	maximum = 0.5 (at node 0)
-Injected flit rate average = 0.00800781
-	minimum = 0 (at node 7)
-	maximum = 0.11 (at node 1)
-Accepted flit rate average= 0.0078125
-	minimum = 0 (at node 1)
-	maximum = 0.5 (at node 0)
-Injected packet length average = 1
-Accepted packet length average = 1
-Total in-flight flits = 566 (86 measured)
-latency change    = 0.381852
-throughput change = 0
-Class 0:
-Packet latency average = 139.398
-	minimum = 6
-	maximum = 634
-Network latency average = 74.8641
-	minimum = 6
-	maximum = 479
-Slowest packet = 685
-Flit latency average = 149.813
-	minimum = 6
-	maximum = 740
-Slowest flit = 41
-Fragmentation average = 0
-	minimum = 0
-	maximum = 0
-Injected packet rate average = 0.00789063
-	minimum = 0 (at node 7)
-	maximum = 0.106667 (at node 1)
-Accepted packet rate average = 0.0078125
-	minimum = 0 (at node 1)
-	maximum = 0.5 (at node 0)
-Injected flit rate average = 0.00789063
-	minimum = 0 (at node 7)
-	maximum = 0.106667 (at node 1)
-Accepted flit rate average= 0.0078125
-	minimum = 0 (at node 1)
-	maximum = 0.5 (at node 0)
-Injected packet length average = 1
-Accepted packet length average = 1
-Total in-flight flits = 565 (100 measured)
-latency change    = 0.2818
-throughput change = 0
+Total in-flight flits = 3963 (0 measured)
+latency change    = 0.43654
+throughput change = 0.00908174
 Average latency for class 0 exceeded 500 cycles. Aborting simulation.
 Too many sample periods needed to converge
 Simulation unstable, ending ...
-Total run time 0.135231
+Total run time 0.213516
