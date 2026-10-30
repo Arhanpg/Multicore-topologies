@@ -15,10 +15,11 @@ for routing in dor adaptive_xy_yx; do
       for rate in 0.02 0.05 0.10 0.15 0.20 0.30; do
         tag="adaptive_${routing}_${size}x${size}_vc4_${traffic//[()]/}_${rate//./p}"
         log="$RAW/${tag}.log"
-        "$BOOKSIM" "$ROOT/runfiles/meshconfig" \
+        "$BOOKSIM" "$ROOT/configs/matched/mesh_dor_4x4_vc4.conf" \
           topology=mesh k="$size" n=2 routing_function="$routing" num_vcs=4 \
           traffic="$traffic" injection_rate="$rate" packet_size=1 \
-          sample_period=200 warmup_periods=1 sim_count=1 > "$log" 2>&1
+          sample_period=1000 warmup_periods=3 sim_count=1 \
+          alloc_iters=1 wait_for_tail_credit=0 > "$log" 2>&1
         status=$?
         python3 "$ROOT/results/parse_results.py" "$log" "$routing" \
           "${size}x${size}" 4 "$traffic" "$rate" "$status" >> "$DATA"

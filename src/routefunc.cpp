@@ -39,6 +39,8 @@
 #include <map>
 #include <cstdlib>
 #include <cassert>
+#include <algorithm>
+#include <iostream>
 
 #include "booksim.hpp"
 #include "routefunc.hpp"
@@ -1809,21 +1811,23 @@ static double hacr_score(const Router *r, int port)
   return gHacrAlpha * current + (1.0 - gHacrAlpha) * history;
 }
 
-static int hacr_select_port(const Router *r, vector<int> const &ports)
+static vector<pair<int, double> > hacr_rank_ports(const Router *r,
+                                                   vector<int> const &ports)
 {
   assert(!ports.empty());
-  int selected = ports[0];
-  double selected_score = hacr_score(r, selected);
-  for (size_t i = 1; i < ports.size(); ++i) {
+  vector<pair<int, double> > ranked;
+  for (size_t i = 0; i < ports.size(); ++i) {
     const int candidate = ports[i];
-    const double score = hacr_score(r, candidate);
-    if (score < selected_score ||
-        (score == selected_score && candidate < selected)) {
-      selected = candidate;
-      selected_score = score;
-    }
+    ranked.push_back(make_pair(candidate, hacr_score(r, candidate)));
   }
-  return selected;
+  sort(ranked.begin(), ranked.end(),
+       [](pair<int, double> const &left, pair<int, double> const &right) {
+         if (left.second != right.second) {
+           return left.second < right.second;
+         }
+         return left.first < right.first;
+       });
+  return ranked;
 }
 
 void hacr_min_adapt_mesh(const Router *r, const Flit *f, int in_channel,
@@ -1853,7 +1857,7 @@ void hacr_min_adapt_mesh(const Router *r, const Flit *f, int in_channel,
 
   const int escape = dor_next_mesh(r->GetID(), f->dest);
   outputs->AddRange(escape, vcBegin, vcBegin, 0);
-  if (vcEnd <= vcBegin) {
+  if (f->vc >= vcBegin && f->vc <= vcBegin) {
     return;
   }
 
@@ -1868,7 +1872,12 @@ void hacr_min_adapt_mesh(const Router *r, const Flit *f, int in_channel,
     dest /= gK;
   }
   if (!candidates.empty()) {
-    outputs->AddRange(hacr_select_port(r, candidates), vcBegin + 1, vcEnd, 1);
+    vector<pair<int, double> > ranked = hacr_rank_ports(r, candidates);
+    int priority = static_cast<int>(ranked.size());
+    for (size_t i = 0; i < ranked.size(); ++i) {
+      outputs->AddRange(ranked[i].first, vcBegin + 1, vcEnd, priority);
+      --priority;
+    }
   }
 }
 
@@ -1898,11 +1907,13 @@ void hacr_min_adapt_torus(const Router *r, const Flit *f, int in_channel,
   }
 
   int escape_port;
-  int escape_phase = f->ph;
   dor_next_torus(r->GetID(), f->dest, 2 * gN, &escape_port,
-                 &escape_phase, false);
-  outputs->AddRange(escape_port, vcBegin + escape_phase,
-                    vcBegin + escape_phase, 0);
+                 &f->ph, false);
+  outputs->AddRange(escape_port, vcBegin + f->ph,
+                    vcBegin + f->ph, 0);
+  if (f->vc >= vcBegin && f->vc <= vcBegin + 1) {
+    return;
+  }
   if (vcEnd <= vcBegin + 1) {
     return;
   }
@@ -1927,8 +1938,16 @@ void hacr_min_adapt_torus(const Router *r, const Flit *f, int in_channel,
     dest /= gK;
   }
   if (!candidates.empty()) {
-    outputs->AddRange(hacr_select_port(r, candidates), vcBegin + 2,
-                      vcEnd, 1);
+    const int adaptive_vc = vcBegin + 3;
+    if (adaptive_vc > vcEnd) {
+      return;
+    }
+    vector<pair<int, double> > ranked = hacr_rank_ports(r, candidates);
+    int priority = static_cast<int>(ranked.size());
+    for (size_t i = 0; i < ranked.size(); ++i) {
+      outputs->AddRange(ranked[i].first, adaptive_vc, adaptive_vc, priority);
+      --priority;
+    }
   }
 }
 
@@ -2059,6 +2078,12 @@ void InitializeRoutingMap( const Configuration & config )
   gNumVCs = config.GetInt( "num_vcs" );
   gHacrAlpha = config.GetFloat("hacr_alpha");
   gHacrLambda = config.GetFloat("hacr_lambda");
+  if (gHacrAlpha < 0.0 || gHacrAlpha > 1.0 ||
+      gHacrLambda < 0.0 || gHacrLambda > 1.0) {
+    cerr << "Invalid HACR parameter: hacr_alpha and hacr_lambda must be "
+         << "within [0, 1]." << endl;
+    exit(1);
+  }
   gHacrHistory.clear();
 
   //

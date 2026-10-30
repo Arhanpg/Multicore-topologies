@@ -15,9 +15,19 @@ def main() -> int:
     text = open(log, encoding="utf-8", errors="replace").read()
     latency = last_float(r"Packet latency average = ([0-9.eE+-]+)", text)
     throughput = last_float(r"Accepted packet rate average\s*=\s*([0-9.eE+-]+)", text)
+    invalid = (
+        status != "0"
+        or latency == "NA"
+        or throughput == "NA"
+        or re.search(
+            r"assert|Assertion|invalid routing|deadlock|unstable|timeout",
+            text,
+            re.IGNORECASE,
+        )
+    )
     print(
         "\t".join(
-            (topology, size, vcs, traffic, rate, latency, throughput, status)
+            (topology, size, vcs, traffic, rate, latency, throughput, "1" if invalid else "0")
         )
     )
     return 0
